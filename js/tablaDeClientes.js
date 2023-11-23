@@ -5,6 +5,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const ordenActual = localStorage.getItem('ordenActual') || 'nombre';
 
+    // Obtener la cantidad almacenada en sessionStorage
+    const cantidadGuardada = sessionStorage.getItem('cantidadClientes');
+
+    // Actualizar el contador con la cantidad almacenada
+    actualizarContador(cantidadGuardada || 0);
+
     cargarClientesDesdeDB(false, ordenActual);
 
     function cargarClientesDesdeDB(ordenado = false, campoOrdenacion) {
@@ -33,6 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
             getAllRequest.onsuccess = function (event) {
                 const clientes = event.target.result;
 
+                // Limpiar la tabla antes de volver a llenarla
                 limpiarHTML();
 
                 if (clientes && clientes.length > 0) {
@@ -40,6 +47,10 @@ document.addEventListener("DOMContentLoaded", () => {
                         regresarClienteAlHtml(cliente);
                     });
                 }
+
+                const cantidadClientes = clientes.length;
+                actualizarContador(cantidadClientes);
+                sessionStorage.setItem('cantidadClientes', cantidadClientes);
             };
         };
 
@@ -57,28 +68,14 @@ document.addEventListener("DOMContentLoaded", () => {
             localStorage.setItem('ordenActual', campoOrdenacion);
         }
     }
+
     
-
     function regresarClienteAlHtml(cliente) {
-        const filaExistente = document.querySelector(`tr[data-id="${cliente.id}"]`);
-
-        if (filaExistente) {
-            // Actualizar la fila existente en lugar de crear una nueva
-            const nombreCliente = filaExistente.querySelector("td:first-child");
-            const telefonoCliente = filaExistente.querySelector("td:nth-child(2)");
-            const empresaCliente = filaExistente.querySelector("td:nth-child(3)");
-
-            nombreCliente.textContent = cliente.nombre;
-            telefonoCliente.textContent = cliente.telefono;
-            empresaCliente.textContent = cliente.empresa;
-
-            return;
-        }
-
         console.log("Añadiendo cliente:", cliente);
 
         const fila = document.createElement("tr");
         fila.dataset.id = cliente.id;
+        fila.style.marginBottom = "1rem"
 
         const nombreCliente = document.createElement("td");
         nombreCliente.textContent = cliente.nombre;
@@ -93,12 +90,15 @@ document.addEventListener("DOMContentLoaded", () => {
         fila.appendChild(empresaCliente);
 
         const acciones = document.createElement("td");
+        acciones.classList.add("flex", "items-center")
         const contenedorBotones = document.createElement("div");
+        contenedorBotones.classList.add("flex", "items-center")
 
         const botonEditar = document.createElement("button");
         botonEditar.textContent = "Editar Cliente";
 
-        botonEditar.classList.add("bg-teal-600", "mt-5", "p-2", "text-white", "uppercase", "font-bold");
+        botonEditar.classList.add("bg-teal-600", "mt-2",  "p-2", "text-white", "uppercase", "font-bold", "btn-primary", "me-2");
+        botonEditar.style.marginBottom = "1rem"
 
         tablaDeClientes.addEventListener("click", (event) => {
             const boton = event.target;
@@ -112,6 +112,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 } else if (boton.textContent === "Borrar Cliente") {
                     eliminarCliente(clienteId);
                     fila.remove();
+                    mostrarToast("Cliente eliminado correctamente")
                 }
             }
         });
@@ -121,7 +122,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const botonBorrar = document.createElement("button");
         botonBorrar.textContent = "Borrar Cliente";
 
-        botonBorrar.classList.add("bg-teal-600", "mt-5", "p-2", "text-white", "uppercase", "font-bold");
+        botonBorrar.classList.add("bg-teal-600", "mt-2", "p-2", "text-white", "uppercase", "font-bold");
+        botonBorrar.style.marginBottom = "1rem"
 
         contenedorBotones.appendChild(botonEditar);
         contenedorBotones.appendChild(espacio);
@@ -135,6 +137,8 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
             console.error("No se pudo encontrar el elemento 'tablaDeClientes'.");
         }
+
+        // No necesitas actualizar el contador y mostrar el toast aquí, ya que eso se hace después de cargar todos los clientes.
     }
 
     function mostrarBotonesOrdenar() {
@@ -157,4 +161,23 @@ document.addEventListener("DOMContentLoaded", () => {
             tablaDeClientes.removeChild(tablaDeClientes.firstChild);
         }
     }
+
 });
+
+export function actualizarContador(cantidad) {
+    const contadorElemento = document.getElementById('contadorClientes');
+
+    if (contadorElemento) {
+        contadorElemento.textContent = `(${cantidad})`;
+        sessionStorage.setItem('cantidadClientes', cantidad);
+    }
+}
+
+// Funcion que muestra el toast
+export function mostrarToast(mensaje) {
+    const toastDiv = document.querySelector("#toast")
+    const toastDivBody = document.querySelector(".toast-body")
+    const toast = new bootstrap.Toast(toastDiv)
+    toastDivBody.textContent = mensaje
+    toast.show()
+}

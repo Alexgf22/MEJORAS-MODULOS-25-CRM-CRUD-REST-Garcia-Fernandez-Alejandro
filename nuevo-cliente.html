@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CRM - IndexedDB</title>
     <link rel="stylesheet" href="css/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
 </head>
 <body class="min-h-100 bg-gray-200">
     <div class="md:flex min-h-screen md:align-top">
@@ -15,7 +17,10 @@
                 <a  
                     href="index.html" 
                     class="px-3 py-1 text-white block hover:bg-teal-700 hover:text-yellow-400 "
-                >Clientes</a>
+                >
+                Clientes
+                <span id="contadorClientes" class="text-yellow-400 ml-2">(0)</span>
+            </a>
                 <a 
                     href="nuevo-cliente.html" 
                     class="px-3 py-1 text-white block hover:bg-teal-900 mt-2 hover:text-yellow-400 bg-teal-700"
@@ -104,6 +109,26 @@
             </div>
         </main>
     </div>
+
+    <div class="toast-container position-fixed top-0 end-0 p-3">
+        <div
+          id="toast"
+          class="toast"
+          role="alert"
+          aria-live="assertive"
+          aria-atomic="true">
+          <div class="toast-header bg-danger text-white">
+            <strong class="me-auto text-white">App CRM CRUD Rest Clientes</strong>
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="toast"
+              aria-label="Close"></button>
+          </div>
+          <div class="toast-body"></div>
+        </div>
+    </div>
+    
     <script type="module" src="js/basededatos.js"></script>
     <script type="module" src="js/nuevocliente.js"></script>
 </body>
