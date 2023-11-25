@@ -14,6 +14,7 @@
 - 2. Contador de clientes añadidos a la tabla.
 - 3. Añadido el campo de correo electrónico a la tabla para que al pulsar en el correo
 te rediriga a la página de enviar correo.
-- 4. Alerta de añadir nuevo cliente.
-- 5. Alerta de borrar cliente de la tabla.
-- 6. Alerta de datos de clientes modificados.
+- 4. Historial de emails enviados.
+- 5. Alerta de añadir nuevo cliente.
+- 6. Alerta de borrar cliente de la tabla.
+- 7. Alerta de datos de clientes modificados.

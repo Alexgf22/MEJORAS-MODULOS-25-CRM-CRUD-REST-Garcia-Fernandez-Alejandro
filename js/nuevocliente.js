@@ -22,18 +22,18 @@ document.addEventListener("DOMContentLoaded", () => {
     btnSubmit.classList.add("opacity-50")
 
     // Obtén la cantidad actual de clientes almacenada en sessionStorage
-    const cantidadClientesActual = sessionStorage.getItem('cantidadClientes') || 0;
+    const cantidadClientesActual = sessionStorage.getItem('cantidadClientes') || 0
 
     btnSubmit.addEventListener("click", () => {
         agregarClienteDB()
 
         // Actualiza la cantidad sumando 1
-        const nuevaCantidadClientes = parseInt(cantidadClientesActual) + 1;
+        const nuevaCantidadClientes = parseInt(cantidadClientesActual) + 1
 
-        actualizarContador(nuevaCantidadClientes);
+        actualizarContador(nuevaCantidadClientes)
 
         // Guarda la nueva cantidad en sessionStorage
-        sessionStorage.setItem('cantidadClientes', nuevaCantidadClientes);
+        sessionStorage.setItem('cantidadClientes', nuevaCantidadClientes)
 
         window.location.href = 'index.html'
     })

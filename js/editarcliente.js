@@ -5,6 +5,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const idCliente = obtenerIdClienteDesdeURL()
     const formulario = document.querySelector("#formulario")
 
+    let contadorDeClientes = document.querySelector("#contadorClientes")
+
+    // Se asigna la cantidad actual de clientes almacenada en sessionStorage
+    let cantidadClientes = parseInt(sessionStorage.getItem('cantidadClientes')) || 0
+
+    // Mostrar la cantidad actual de clientes en el elemento del contador
+    contadorDeClientes.textContent = `(${cantidadClientes.toString()})`
+
     cargarDatosCliente(idCliente)
 
     formulario.addEventListener("submit", async (e) => {
@@ -70,7 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function obtenerIdClienteDesdeURL() {
         const params = new URLSearchParams(window.location.search)
         const idCliente = params.get('id')
-        console.log('ID del cliente desde URL:', idCliente);
+        console.log('ID del cliente desde URL:', idCliente)
         return idCliente
     }
     
