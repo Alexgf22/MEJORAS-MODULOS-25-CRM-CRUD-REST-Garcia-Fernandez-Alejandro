@@ -1,6 +1,21 @@
 
 document.addEventListener("DOMContentLoaded", () => {
-    // Selectores
+
+    let historialDiv = document.querySelector("#historial")
+    if (!historialDiv) {
+        historialDiv = document.createElement("div")
+        historialDiv.id = "historial"
+        document.body.appendChild(historialDiv)
+    }
+
+    const emailOBJ = {
+        email: "",
+        asunto: "",
+        mensaje: ""
+    }
+
+    cargarHistorial(emailOBJ)
+
     const inputEmail = document.querySelector("#email")
     const inputAsunto = document.querySelector("#asunto")
     const inputMensaje = document.querySelector("#mensaje")
@@ -9,25 +24,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnReset = document.querySelector('#formulario button[type="reset"]')
     const spinner = document.querySelector("#spinner")
 
-    // Objeto con el contenido del mensaje
-    const emailOBJ = {
-        email: "",
-        asunto: "",
-        mensaje: ""
-    }
-
-    // Obtener el correo del cliente desde la URL
     const params = new URLSearchParams(window.location.search)
     const clienteEmail = params.get('email')
 
-    // Llenar el campo del email en el formulario
     if (inputEmail && clienteEmail !== null && clienteEmail !== undefined) {
         inputEmail.value = decodeURIComponent(clienteEmail)
         emailOBJ.email = decodeURIComponent(clienteEmail)
+        console.log("Email establecido:", inputEmail.value)
     }
 
-
-    // Listeners
     inputEmail.addEventListener("input", validar)
     inputAsunto.addEventListener("input", validar)
     inputMensaje.addEventListener("input", validar)
@@ -37,9 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
         resetForm()
     })
 
-    // Funciones
     function activarSpinner(e) {
-        console.log("Función activarSpinner llamada")
         e.preventDefault()
         spinner.classList.remove("hidden")
         spinner.classList.add("flex")
@@ -48,9 +51,13 @@ document.addEventListener("DOMContentLoaded", () => {
             spinner.classList.add("hidden")
             spinner.classList.remove("flex")
 
+            if (emailOBJ.email && emailOBJ.asunto && emailOBJ.mensaje) {
+                const mensaje = `<strong>Email:</strong> ${emailOBJ.email} - <strong>Asunto:</strong> ${emailOBJ.asunto} - <strong>Mensaje:</strong> ${emailOBJ.mensaje}`
+                agregarAlHistorial(mensaje)
+            }
+
             resetForm()
 
-            // Creamos una alerta para confirmar todo OK
             const alerta = document.createElement("p")
             alerta.classList.add("bg-green-500", "text-white", "text-center", "rounded-lg", "mt-10", "text-sm")
             alerta.textContent = "El mensaje se ha mandado con éxito"
@@ -60,6 +67,42 @@ document.addEventListener("DOMContentLoaded", () => {
                 alerta.remove()
             }, 3000)
         }, 3000)
+    }
+
+    function cargarHistorial(emailOBJ) {
+        const historialDiv = document.querySelector("#historial")
+
+        if (historialDiv) {
+            const historial = JSON.parse(localStorage.getItem("historial")) || []
+
+            historialDiv.innerHTML = '<h1 style="font-size: 24px;">Historial de Mensajes</h1>'
+
+            historial.forEach((entrada) => {
+                const entradaHistorial = document.createElement("p")
+                entradaHistorial.innerHTML = entrada
+                historialDiv.appendChild(entradaHistorial)
+            })
+
+            // Agregar la última entrada al historial si hay un mensaje actual
+            if (emailOBJ.email && emailOBJ.asunto && emailOBJ.mensaje) {
+                const mensaje = `<strong>Email:</strong> ${emailOBJ.email} - <strong>Asunto:</strong> ${emailOBJ.asunto} - <strong>Mensaje:</strong> ${emailOBJ.mensaje}`
+                agregarAlHistorial(mensaje)
+            }
+        }
+    }
+
+    function agregarAlHistorial(entrada) {
+        const historialDiv = document.querySelector("#historial")
+        if (historialDiv) {
+            const entradaHistorial = document.createElement("p")
+            entradaHistorial.innerHTML = entrada
+            historialDiv.appendChild(entradaHistorial)
+
+            // Guardar el mensaje en localStorage
+            const historial = JSON.parse(localStorage.getItem("historial")) || []
+            historial.push(entrada)
+            localStorage.setItem("historial", JSON.stringify(historial))
+        }
     }
 
     function resetForm() {
@@ -91,9 +134,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function comprobarFormulario() {
         const values = Object.values(emailOBJ)
-        console.log(values)
 
-        // Activar botón
         if (values.includes("")) {
             btnSubmit.classList.add("opacity-50")
             btnSubmit.disabled = true

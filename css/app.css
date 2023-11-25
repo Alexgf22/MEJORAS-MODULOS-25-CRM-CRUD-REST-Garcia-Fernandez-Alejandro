@@ -172,6 +172,21 @@ table {
   /* 3 */
 }
 
+#historial {
+  max-width: 650px;
+  margin: 0 auto;
+  text-align: center;
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#historial p {
+  margin: 8px 0;
+}
+
+
 /*
 1. Change the font styles in all browsers.
 2. Remove the margin in Firefox and Safari.
