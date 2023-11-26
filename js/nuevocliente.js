@@ -24,6 +24,9 @@ document.addEventListener("DOMContentLoaded", () => {
     // Obtén la cantidad actual de clientes almacenada en sessionStorage
     const cantidadClientesActual = sessionStorage.getItem('cantidadClientes') || 0
 
+    // Actualiza el contador con la cantidad almacenada
+    actualizarContador(cantidadClientesActual || 0)
+
     btnSubmit.addEventListener("click", () => {
         agregarClienteDB()
 
@@ -35,7 +38,10 @@ document.addEventListener("DOMContentLoaded", () => {
         // Guarda la nueva cantidad en sessionStorage
         sessionStorage.setItem('cantidadClientes', nuevaCantidadClientes)
 
-        window.location.href = 'index.html'
+        mostrarToast("Cliente añadido correctamente", 'success')
+        setTimeout(() => {
+            window.location.href = 'index.html'
+        }, 3000)
     })
 
     inputNombre.addEventListener("focus", resaltarCampoActivo)
@@ -108,7 +114,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // Función para activar el spinner e imitar un envío de formulario
     function activarSpinner(e) {
         e.preventDefault()
-        mostrarToast("Cliente añadido correctamente", 'success')
         spinner.classList.remove("hidden")
         spinner.classList.add("flex")
 

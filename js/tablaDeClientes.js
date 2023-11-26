@@ -74,7 +74,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         
         function regresarClienteAlHtml(cliente) {
-            console.log("Añadiendo cliente:", cliente)
 
             const fila = document.createElement("tr")
             fila.dataset.id = cliente.id
@@ -129,10 +128,10 @@ document.addEventListener("DOMContentLoaded", () => {
                         eliminarCliente(clienteId)
                         fila.remove()
 
-                        if (boton.classList.contains("btn-borrar")) {
+                        mostrarToast("Cliente eliminado correctamente", 'success')
+                        setTimeout(() => {
                             window.location.href = 'index.html'
-                            mostrarToast("Cliente eliminado correctamente", 'success')
-                        }
+                        }, 3000)                  
                         
                     }
                 }
@@ -180,12 +179,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         function limpiarHTML() {
-            const listaClientes = document.querySelector("#listado-clientes tbody")
-        
-            if (listaClientes) {
-                while (listaClientes.firstChild) {
-                    listaClientes.removeChild(listaClientes.firstChild)
-                }
+            while (tablaDeClientes.firstChild) {
+                tablaDeClientes.removeChild(tablaDeClientes.firstChild)
             }
         }
 

@@ -1,9 +1,11 @@
 import { modificarCliente} from './basededatos.js'
+import {mostrarToast} from './tablaDeClientes.js'
 
 document.addEventListener("DOMContentLoaded", () => {
 
     const idCliente = obtenerIdClienteDesdeURL()
     const formulario = document.querySelector("#formulario")
+    const spinner = document.querySelector("#spinner")
 
     // Obtener el orden actual almacenado en sessionStorage o usar 'nombre' como valor predeterminado
     const ordenActual = sessionStorage.getItem('ordenActual') || 'nombre'
@@ -28,9 +30,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
         await modificarCliente(idCliente, nuevoNombre, nuevoEmail, nuevoTelefono, nuevaEmpresa)
 
-        //window.location.href = "index.html"
-        // Al terminar la edición, redirigir a la página principal manteniendo el orden actual
-        window.location.href = `index.html?orden=${encodeURIComponent(ordenActual)}`
+
+        mostrarToast("Cliente editado correctamente", 'success')
+        activarSpinner(e)
+        setTimeout(() => {
+            // Al terminar la edición, redirigir a la página principal manteniendo el orden actual
+            window.location.href = `index.html?orden=${encodeURIComponent(ordenActual)}`
+        }, 3000)
+        
     })
 
     const nombreInput = document.querySelector("#nombre")
@@ -86,8 +93,32 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log('ID del cliente desde URL:', idCliente)
         return idCliente
     }
-    
 
+    function activarSpinner(e) {
+        e.preventDefault()
+        spinner.classList.remove("hidden")
+        spinner.classList.add("flex")
+
+        setTimeout(() => {
+            spinner.classList.add("hidden")
+            spinner.classList.remove("flex")
+            resetForm()
+
+            // Diseñar y mostrar una alerta de éxito
+            const alerta = document.createElement("p")
+            alerta.classList.add("bg-green-500", "text-white", "text-center",
+            "rounded-lg", "mt-10", "text-sm")
+            alerta.textContent = "El mensaje se ha mandado con éxito"
+            formulario.appendChild(alerta)
+
+            setTimeout(() => {
+                alerta.remove()
+            }, 3000)
+
+        }, 3000)
+
+    }
+    
     function validarFormulario() {
         const nuevoNombre = nombreInput.value.trim()
         const nuevoEmail = emailInput.value.trim()
