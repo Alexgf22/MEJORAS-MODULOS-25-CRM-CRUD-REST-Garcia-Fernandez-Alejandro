@@ -1,12 +1,8 @@
-# 25-PROYECTO-CRM-CRUD-REST-Garcia-Fernandez-Alejandro
-
-## Cheatsheet en formato markdown
-
-[Documentación sobre IndexedDb y expresiones regulares](./Cheatsheet.md)
+# AMPLIACION/MEJORAS-25-PROYECTO-CRM-CRUD-REST-Garcia-Fernandez-Alejandro
 
 ## Código de la aplicación
 
-[Página principal](https://alexgf22.github.io/MODULOS-25-PROYECTO-CRM-CRUD-REST-Garcia-Fernandez-Alejandro/index.html)
+[Página principal](https://alexgf22.github.io/MEJORAS-MODULOS-25-CRM-CRUD-REST-Garcia-Fernandez-Alejandro/index.html)
 
 ## Mejoras añadidas
 

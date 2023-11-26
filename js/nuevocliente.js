@@ -1,5 +1,5 @@
 import { agregarCliente} from './basededatos.js'
-import { actualizarContador} from './tablaDeClientes.js'
+import { actualizarContador, mostrarToast} from './tablaDeClientes.js'
 
 let clienteOBJ = {
     nombre: "",
@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
         validar(e)
     })
 
-    formulario.addEventListener("submit", activarSpinner)
+    btnSubmit.addEventListener("click", activarSpinner)
 
     function agregarClienteDB() {
         const id = generarIdUnico()
@@ -82,8 +82,10 @@ document.addEventListener("DOMContentLoaded", () => {
             comprobarFormulario()
     
             console.log("Añadiendo cliente a la base de datos:", copiaClienteOBJ)
+            //mostrarToast("Cliente añadido correctamente", 'success')
         } else {
             console.error("No se pueden añadir clientes con campos vacíos.")
+            //mostrarToast("Error al añadir el cliente", 'danger')
         }
     }
     
@@ -106,6 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Función para activar el spinner e imitar un envío de formulario
     function activarSpinner(e) {
         e.preventDefault()
+        mostrarToast("Cliente añadido correctamente", 'success')
         spinner.classList.remove("hidden")
         spinner.classList.add("flex")
 
