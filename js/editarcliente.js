@@ -5,6 +5,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const idCliente = obtenerIdClienteDesdeURL()
     const formulario = document.querySelector("#formulario")
 
+    // Obtener el orden actual almacenado en sessionStorage o usar 'nombre' como valor predeterminado
+    const ordenActual = sessionStorage.getItem('ordenActual') || 'nombre'
+
     let contadorDeClientes = document.querySelector("#contadorClientes")
 
     // Se asigna la cantidad actual de clientes almacenada en sessionStorage
@@ -25,7 +28,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         await modificarCliente(idCliente, nuevoNombre, nuevoEmail, nuevoTelefono, nuevaEmpresa)
 
-        window.location.href = "index.html"
+        //window.location.href = "index.html"
+        // Al terminar la edición, redirigir a la página principal manteniendo el orden actual
+        window.location.href = `index.html?orden=${encodeURIComponent(ordenActual)}`
     })
 
     const nombreInput = document.querySelector("#nombre")

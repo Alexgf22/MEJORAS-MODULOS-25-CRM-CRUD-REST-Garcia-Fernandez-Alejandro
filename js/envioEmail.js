@@ -1,13 +1,7 @@
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    let historialDiv = document.querySelector("#historial")
-    if (!historialDiv) {
-        historialDiv = document.createElement("div")
-        historialDiv.id = "historial"
-        document.body.appendChild(historialDiv)
-    }
-
+   
     const emailOBJ = {
         email: "",
         asunto: "",
@@ -16,6 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     cargarHistorial(emailOBJ)
 
+    // Selectores
     const inputEmail = document.querySelector("#email")
     const inputAsunto = document.querySelector("#asunto")
     const inputMensaje = document.querySelector("#mensaje")
@@ -23,6 +18,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnSubmit = document.querySelector('#formulario button[type="submit"]')
     const btnReset = document.querySelector('#formulario button[type="reset"]')
     const spinner = document.querySelector("#spinner")
+    let historialDiv = document.querySelector("#historial")
+
+    historialDiv.style.flex = "1 1 50%"
+    formulario.style.flex = "1 1 50%"
 
     const params = new URLSearchParams(window.location.search)
     const clienteEmail = params.get('email')
@@ -33,6 +32,8 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log("Email establecido:", inputEmail.value)
     }
 
+
+    // Listeners
     inputEmail.addEventListener("input", validar)
     inputAsunto.addEventListener("input", validar)
     inputMensaje.addEventListener("input", validar)
@@ -75,10 +76,12 @@ document.addEventListener("DOMContentLoaded", () => {
         if (historialDiv) {
             const historial = JSON.parse(localStorage.getItem("historial")) || []
 
-            historialDiv.innerHTML = '<h1 style="font-size: 24px;">Historial de Mensajes</h1>'
+            historialDiv.innerHTML = '<h1 class="text-2xl font-bold mb-4">Historial de Mensajes</h1>'
+            historialDiv.classList.add("flex-1", "ml-6", "bg-white", "rounded-lg", "shadow-xl", "p-4")
 
             historial.forEach((entrada) => {
                 const entradaHistorial = document.createElement("p")
+                entradaHistorial.classList.add("text-sm", "mb-2")
                 entradaHistorial.innerHTML = entrada
                 historialDiv.appendChild(entradaHistorial)
             })
@@ -95,6 +98,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const historialDiv = document.querySelector("#historial")
         if (historialDiv) {
             const entradaHistorial = document.createElement("p")
+            entradaHistorial.classList.add("text-sm", "mb-2")
             entradaHistorial.innerHTML = entrada
             historialDiv.appendChild(entradaHistorial)
 

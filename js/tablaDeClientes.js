@@ -1,9 +1,9 @@
 import { eliminarCliente } from './basededatos.js'
 
+
+
 document.addEventListener("DOMContentLoaded", () => {
     const tablaDeClientes = document.querySelector("#listado-clientes")
-
-    const ordenActual = localStorage.getItem('ordenActual') || 'nombre'
 
     // Obtener la cantidad almacenada en sessionStorage
     const cantidadGuardada = sessionStorage.getItem('cantidadClientes')
@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Actualizar el contador con la cantidad almacenada
     actualizarContador(cantidadGuardada || 0)
 
-    cargarClientesDesdeDB(false, ordenActual)
+    cargarClientesDesdeDB(false)
 
     function cargarClientesDesdeDB(ordenado = false, campoOrdenacion) {
         const request = indexedDB.open('MiBaseDeDatos', 1)
@@ -51,6 +51,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 const cantidadClientes = clientes.length
                 actualizarContador(cantidadClientes)
                 sessionStorage.setItem('cantidadClientes', cantidadClientes)
+
+                // Al cargar los clientes, establecemos el valor de 'ordenActual' en sessionStorage
+                if (ordenado) {
+                    sessionStorage.setItem('ordenActual', campoOrdenacion)
+                }
+
             }
         }
 
@@ -64,9 +70,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         // Guardar el orden actual en localStorage solo si está ordenado
-        if (ordenado) {
-            localStorage.setItem('ordenActual', campoOrdenacion)
-        }
+        /* if (ordenado) {
+            sessionStorage.setItem('ordenActual', campoOrdenacion)
+        } */
     }
 
     
@@ -163,6 +169,7 @@ document.addEventListener("DOMContentLoaded", () => {
             botonOrdenar.addEventListener("click", () => {
                 const selectOrdenarPor = document.querySelector("#ordenarPor")
                 const campoOrdenacion = selectOrdenarPor.value
+                sessionStorage.setItem('ordenActual', campoOrdenacion)
                 cargarClientesDesdeDB(true, campoOrdenacion)
             })
         }
