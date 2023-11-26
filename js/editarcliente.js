@@ -102,7 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
         setTimeout(() => {
             spinner.classList.add("hidden")
             spinner.classList.remove("flex")
-            resetForm()
+            formulario.reset()
 
             // Diseñar y mostrar una alerta de éxito
             const alerta = document.createElement("p")
@@ -118,6 +118,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 3000)
 
     }
+
     
     function validarFormulario() {
         const nuevoNombre = nombreInput.value.trim()

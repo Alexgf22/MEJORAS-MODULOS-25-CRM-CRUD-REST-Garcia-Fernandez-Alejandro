@@ -88,10 +88,9 @@ document.addEventListener("DOMContentLoaded", () => {
             comprobarFormulario()
     
             console.log("Añadiendo cliente a la base de datos:", copiaClienteOBJ)
-            //mostrarToast("Cliente añadido correctamente", 'success')
         } else {
             console.error("No se pueden añadir clientes con campos vacíos.")
-            //mostrarToast("Error al añadir el cliente", 'danger')
+            mostrarToast("Error al añadir el cliente", 'danger')
         }
     }
     

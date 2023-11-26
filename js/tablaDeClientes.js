@@ -1,7 +1,6 @@
 import { eliminarCliente} from './basededatos.js'
 
 
-
 document.addEventListener("DOMContentLoaded", () => {
     if (window.location.pathname.includes('index.html')) {
         const tablaDeClientes = document.querySelector("#listado-clientes")
@@ -12,8 +11,16 @@ document.addEventListener("DOMContentLoaded", () => {
         // Actualizar el contador con la cantidad almacenada
         actualizarContador(cantidadGuardada || 0)
 
-        cargarClientesDesdeDB(false)
+        let ordenSeleccionado = false
 
+        const ordenActual = sessionStorage.getItem('ordenActual')
+        if (ordenSeleccionado && ordenActual) {
+            cargarClientesDesdeDB(true, ordenActual)
+        } else {
+            cargarClientesDesdeDB(false)
+        }
+        
+        
         function cargarClientesDesdeDB(ordenado = false, campoOrdenacion) {
             const request = indexedDB.open('MiBaseDeDatos', 1)
 
@@ -128,10 +135,15 @@ document.addEventListener("DOMContentLoaded", () => {
                         eliminarCliente(clienteId)
                         fila.remove()
 
+                        // Se muestra la alerta de cliente eliminado
                         mostrarToast("Cliente eliminado correctamente", 'success')
+                        /*
+                         Se esperan 3 segundos para recargar la página y
+                         actualizar el contador con el número de clientes
+                        */
                         setTimeout(() => {
                             window.location.href = 'index.html'
-                        }, 3000)                  
+                        }, 2400)                  
                         
                     }
                 }
@@ -173,6 +185,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     const selectOrdenarPor = document.querySelector("#ordenarPor")
                     const campoOrdenacion = selectOrdenarPor.value
                     sessionStorage.setItem('ordenActual', campoOrdenacion)
+                    ordenSeleccionado = true
                     cargarClientesDesdeDB(true, campoOrdenacion)
                 })
             }
