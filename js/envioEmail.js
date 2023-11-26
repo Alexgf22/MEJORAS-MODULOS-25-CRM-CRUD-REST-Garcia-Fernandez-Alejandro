@@ -29,7 +29,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (inputEmail && clienteEmail !== null && clienteEmail !== undefined) {
         inputEmail.value = decodeURIComponent(clienteEmail)
         emailOBJ.email = decodeURIComponent(clienteEmail)
-        console.log("Email establecido:", inputEmail.value)
     }
 
 
@@ -76,7 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (historialDiv) {
             const historial = JSON.parse(localStorage.getItem("historial")) || []
 
-            historialDiv.innerHTML = '<h1 class="text-2xl font-bold mb-4">Historial de Mensajes</h1>'
+            historialDiv.innerHTML = '<h1 class="text-2xl font-bold mb-4 text-center my-8">Historial de Mensajes</h1>'
             historialDiv.classList.add("flex-1", "ml-6", "bg-white", "rounded-lg", "shadow-xl", "p-4")
 
             historial.forEach((entrada) => {

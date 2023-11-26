@@ -7,13 +7,20 @@
     <title>Envio de Emails</title>
     <link rel="stylesheet" href="css/app.css">
     <link rel="stylesheet" href="css/spinner.css">
+    <link rel="stylesheet" href="css/tailwind.min.css">
 </head>
 <body class="min-h-screen bg-slate-300">
     <div class="max-w-3xl mx-auto p-10 flex-1">
         <h1 class="text-4xl text-gray-700 pt-32">Enviar mails</h1>
-        <div class="bg-white rounded-lg shadow-xl p-10 mt-2 container flex flex-wrap">
+        <div class="bg-white rounded-lg shadow-xl p-10 mt-2 container">
             <!-- Formulario -->
             <form id="formulario" class="flex-1 pr-5 space-y-3">
+
+                <!-- Ancla para el historial -->
+                <a href="#historial" class="text-blue-500 block underline text-center mt-2 hover:underline font-bold text-lg">
+                    Ir al historial de mensajes
+                </a>
+
                 <div class="flex flex-col space-y-2">
                     <label for="email" class="font-regular font-medium">Email:</label>
                     <input id="email" type="email" name="email" placeholder="Email Destino, ej: mkt@empresa.com" class="border border-gray-300 px-3 py-2 rounded-lg" />
@@ -53,6 +60,8 @@
                 </div>           
             </form>
 
+            
+
                 
             <div id="spinner" class="hidden flex justify-center mt-10">
 
@@ -72,7 +81,8 @@
     </div>
 
     <!-- Historial de mensajes -->
-    <div id="historial" class="max-w-3xl mx-auto p-10 bg-white rounded-lg shadow-xl mt-2"></div>
+    <div id="historial" class="max-w-3xl mx-auto p-10 bg-white rounded-lg shadow-xl mt-8 mb-4" style="margin-left: auto; margin-right: auto; margin-top: 50px; margin-bottom: 20px;">
+    </div>
 
     <script src="js/envioEmail.js"></script>
 

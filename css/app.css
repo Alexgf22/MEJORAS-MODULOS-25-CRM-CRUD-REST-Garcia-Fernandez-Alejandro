@@ -173,6 +173,46 @@ table {
 }
 
 #historial {
+  width: 100%;
+  max-height: 400px;
+  overflow-y: auto;
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  margin: 0; 
+  text-align: justify;
+}
+
+/* Estilo de cada entrada en el historial */
+#historial .text-sm {
+  display: inline-block;
+  text-align: left; 
+  width: 45%; 
+  margin-right: 5%; 
+}
+
+/* Añadir separación entre las entradas */
+#historial hr {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#historial p {
+  margin: 8px 0;
+}
+
+#historial .mensaje {
+  border-bottom: 1px solid #ccc; 
+  padding-bottom: 8px; 
+}
+
+#historial .mensaje:last-child {
+  border-bottom: none; 
+}
+
+#contenedor-historial {
   max-width: 650px;
   margin: 0 auto;
   text-align: center;
@@ -180,11 +220,21 @@ table {
   padding: 10px;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1; 
 }
 
-#historial p {
-  margin: 8px 0;
+#contenedor-formulario {
+  flex: 1 1 calc(50% - 10px);
+  margin-right: 20px; 
 }
+
+
+
 
 
 /*
